@@ -7,18 +7,7 @@ namespace Player
         private Animator anim;
         private CharacterController controller;
 
-        public float speed = 600.0f;
-        public float turnSpeed = 400.0f;
-        public float rotationSpeed = 10.0f;
         private Vector3 moveDirection = Vector3.zero;
-        public float gravity = -20.0f;
-        public float jumpHeight = 2.0f;
-        public Transform groundCheck;
-        public float groundDistance = 0.4f;
-        public LayerMask groundMask;
-
-        private Vector3 velocity = Vector3.zero;
-        private bool isGrounded;
 
         protected override void Start()
         {
