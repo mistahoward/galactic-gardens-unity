@@ -3,12 +3,13 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform target;
-    public Vector3 offset = new Vector3(0f, 1.5f, -3f);
+    public Vector3 offset = new Vector3(0f, 1.5f, -2f);
     public float damping = 5f;
     public float rotationSpeed = 100f;
     public float decayFactor = 0.9f;
     public LayerMask obstacleLayers;  // Set this in inspector to include layers which should block the camera
     public float characterFollowRotationSpeed = 2f; // Speed at which camera follows the player's rotation
+    public float offsetFactor = 1.0f; // The strength of the offset. You can adjust this as needed
 
     private float x = 0f;
     private float y = 0f;
@@ -31,6 +32,7 @@ public class CameraController : MonoBehaviour
             // Calculate input with decay factor
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
+            float horizontalInput = Input.GetAxis("Horizontal"); // Assuming this is the axis that controls character turning
 
             if (Mathf.Abs(mouseX) > 0.01f)
             {
@@ -52,6 +54,8 @@ public class CameraController : MonoBehaviour
 
             // Gradually align camera rotation with target rotation
             x = Mathf.LerpAngle(x, target.rotation.eulerAngles.y, Time.deltaTime * characterFollowRotationSpeed);
+            // Apply an offset based on the character's turning direction
+            x += horizontalInput * offsetFactor;
 
             x += currentXSpeed;
             y -= currentYSpeed;
