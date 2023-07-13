@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LightManager : MonoBehaviour
@@ -11,6 +12,13 @@ public class LightManager : MonoBehaviour
     [SerializeField, Tooltip("Angle to rotate the sun")] private float SunDirection = 170f;
     [SerializeField, Tooltip("How fast time will go")] private float TimeMultiplier = 1;
     [SerializeField] private bool ControlLights = true;
+
+    public Material daySkybox;
+    public Material nightSkybox;
+    private Material currentSkybox;
+    public float transitionDuration = 2f; // Duration of the transition in seconds
+    private float skyboxTransitionStartTime;
+    private bool isTransitioningSkybox = false;
 
     private const float inverseDayLength = 1f / 1440f;
 
@@ -38,6 +46,8 @@ public class LightManager : MonoBehaviour
                 }
             }
         }
+        currentSkybox = nightSkybox;
+        RenderSettings.skybox = nightSkybox;
     }
 
     /// <summary>
@@ -86,5 +96,39 @@ public class LightManager : MonoBehaviour
                 }
             }
         }
+        // TimeOfDay ranges from 0 to 1440.
+        // Let's assume day is from 6AM (360 minutes) to 6PM (1080 minutes), and the rest is night.
+        if ((TimeOfDay >= 360 && TimeOfDay < 1080) && currentSkybox != daySkybox && !isTransitioningSkybox)
+        {
+            // Begin transition to day skybox
+            StartCoroutine(ChangeSkybox(daySkybox));
+        }
+        else if ((TimeOfDay < 360 || TimeOfDay >= 1080) && currentSkybox != nightSkybox && !isTransitioningSkybox)
+        {
+            // Begin transition to night skybox
+            StartCoroutine(ChangeSkybox(nightSkybox));
+        }
     }
+    private IEnumerator ChangeSkybox(Material newSkybox)
+    {
+        isTransitioningSkybox = true;
+        Material oldSkybox = currentSkybox;
+        skyboxTransitionStartTime = Time.time;
+
+        while (Time.time - skyboxTransitionStartTime < transitionDuration)
+        {
+            float t = (Time.time - skyboxTransitionStartTime) / transitionDuration;
+            RenderSettings.skybox.Lerp(oldSkybox, newSkybox, t);
+            DynamicGI.UpdateEnvironment();
+            yield return null;
+        }
+
+        // Ensure the transition fully completes
+        RenderSettings.skybox = newSkybox;
+        DynamicGI.UpdateEnvironment();
+
+        currentSkybox = newSkybox;
+        isTransitioningSkybox = false;
+    }
+
 }
