@@ -50,7 +50,7 @@ namespace Player
             controller.Move(move);
 
             // Animation
-            if (move != Vector3.zero) // if there's any movement
+            if (z != 0) // if there's any forward movement
             {
                 anim.SetInteger("AnimationPar", 1);
             }
@@ -58,6 +58,7 @@ namespace Player
             {
                 anim.SetInteger("AnimationPar", 0);
             }
+
 
             // Jumping
             if (Input.GetButtonDown("Jump") && isGrounded)

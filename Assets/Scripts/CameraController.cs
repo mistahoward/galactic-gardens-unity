@@ -5,11 +5,11 @@ public class CameraController : MonoBehaviour
     public Transform target;
     public Vector3 offset = new Vector3(0f, 1.5f, -2f);
     public float damping = 5f;
-    public float rotationSpeed = 100f;
+    public float rotationSpeed = 300f;
     public float decayFactor = 0.9f;
     public LayerMask obstacleLayers;
     public float characterFollowRotationSpeed = 20f;
-    public float offsetFactor = 15f;
+    public float offsetFactor = 100f;
 
     private float x = 0f;
     private float y = 0f;
