@@ -34,12 +34,12 @@ namespace Player
             // Create a direction vector from the input
             Vector3 move = transform.right * x + transform.forward * z;
 
-            // Calculate the target rotation based on the move direction
-            Quaternion targetRotation = Quaternion.LookRotation(move);
-
-            // Smoothly rotate the player towards the target rotation at a certain speed
-            if (move != Vector3.zero) // Only rotate if moving to prevent snapping to default rotation
+            if (move != Vector3.zero)
             {
+                // Calculate the target rotation based on the move direction
+                Quaternion targetRotation = Quaternion.LookRotation(move);
+
+                // Smoothly rotate the player towards the target rotation at a certain speed
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
             }
 
