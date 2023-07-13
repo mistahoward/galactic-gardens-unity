@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform target;
-    public Vector3 offset = new Vector3(0f, 1.5f, -2f);
+    public Vector3 offset = new Vector3(0f, 1.5f, -3f);
     public float damping = 5f;
     public float rotationSpeed = 100f;
     public float decayFactor = 0.9f;

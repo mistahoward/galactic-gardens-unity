@@ -62,14 +62,11 @@ namespace Player
             // Jumping
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
-                Debug.Log("Jump");
                 // Apply upward force
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 // Trigger JumpStart animation
                 anim.SetTrigger("Jump");
             }
-            Debug.Log("Is Grounded: " + isGrounded);
-
             // Update IsGrounded parameter
             anim.SetBool("IsGrounded", isGrounded);
 
