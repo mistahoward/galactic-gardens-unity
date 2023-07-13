@@ -436,12 +436,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1302138428}
-  distance: 10
-  height: 6
+  offset: {x: 0, y: 2, z: -4}
   damping: 5
-  smoothRotation: 1
-  followBehind: 1
-  rotationDamping: 10
+  rotationSpeed: 100
+  decayFactor: 0.9
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &1199131671
 GameObject:
   m_ObjectHideFlags: 0

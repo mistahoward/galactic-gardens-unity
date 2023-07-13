@@ -1,33 +1,76 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     public Transform target;
-    public float distance = 3.0f;
-    public float height = 3.0f;
-    public float damping = 5.0f;
-    public bool smoothRotation = true;
-    public bool followBehind = true;
-    public float rotationDamping = 10.0f;
+    public Vector3 offset = new Vector3(0f, 1.5f, -2f);
+    public float damping = 5f;
+    public float rotationSpeed = 100f;
+    public float decayFactor = 0.9f;
+    public LayerMask obstacleLayers;  // Set this in inspector to include layers which should block the camera
+    public float characterFollowRotationSpeed = 2f; // Speed at which camera follows the player's rotation
 
-    void Update ()
+    private float x = 0f;
+    private float y = 0f;
+    private float currentXSpeed = 0f;
+    private float currentYSpeed = 0f;
+
+    // Use this for initialization
+    void Start()
     {
-        Vector3 wantedPosition;
-        if(followBehind)
-            wantedPosition = target.TransformPoint(0, height, -distance);
-        else
-            wantedPosition = target.TransformPoint(0, height, distance);
- 
-        transform.position = Vector3.Lerp (transform.position, wantedPosition, Time.deltaTime * damping);
- 
-        if (smoothRotation) {
-            Quaternion wantedRotation = Quaternion.LookRotation(target.position - transform.position, target.up);
-            transform.rotation = Quaternion.Slerp (transform.rotation, wantedRotation, Time.deltaTime * rotationDamping);
+        Vector3 angles = transform.eulerAngles;
+        x = angles.y;
+        y = angles.x;
+    }
+
+    // LateUpdate is called once per frame, but after all Update functions have been called
+    void LateUpdate()
+    {
+        if (target)
+        {
+            // Calculate input with decay factor
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
+
+            if (Mathf.Abs(mouseX) > 0.01f)
+            {
+                currentXSpeed = mouseX * rotationSpeed * Time.deltaTime;
+            }
+            else
+            {
+                currentXSpeed *= decayFactor;
+            }
+
+            if (Mathf.Abs(mouseY) > 0.01f)
+            {
+                currentYSpeed = mouseY * rotationSpeed * Time.deltaTime;
+            }
+            else
+            {
+                currentYSpeed *= decayFactor;
+            }
+
+            // Gradually align camera rotation with target rotation
+            x = Mathf.LerpAngle(x, target.rotation.eulerAngles.y, Time.deltaTime * characterFollowRotationSpeed);
+
+            x += currentXSpeed;
+            y -= currentYSpeed;
+
+            // Clamp the vertical angle within 0 to 50 degree range
+            y = Mathf.Clamp(y, 0f, 50f);
+
+            Quaternion rotation = Quaternion.Euler(y, x, 0);
+            Vector3 direction = rotation * offset;
+            Vector3 desiredPosition = target.position + direction;
+
+            // Check if view is obstructed
+            if (Physics.Raycast(target.position, direction, out RaycastHit hit, direction.magnitude, obstacleLayers))
+            {
+                desiredPosition = hit.point;
+            }
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * damping);
+            transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * damping);
         }
- 
-        else transform.LookAt (target, target.up);
     }
 }
-

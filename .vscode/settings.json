@@ -3,5 +3,6 @@
 		"Behaviour",
 		"Lerp",
 		"Rigidbody"
-	]
+	],
+	"dotnet.defaultSolution": "galactic-gardens.sln"
 }
