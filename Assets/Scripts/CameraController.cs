@@ -4,7 +4,7 @@ public class CameraController : MonoBehaviour
 {
     public Transform target;
     public Vector3 offset = new Vector3(0f, 1.5f, -5f);
-    public float damping = 5f;
+    public float damping = 2f;
     public float rotationSpeed = 300f;
     public float decayFactor = 0.9f;
     public LayerMask obstacleLayers;
