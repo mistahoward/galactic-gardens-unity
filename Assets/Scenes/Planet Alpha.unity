@@ -965,7 +965,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3201427540602530236, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
       propertyPath: m_Name
-      value: Model
+      value: Armature
       objectReference: {fileID: 0}
     - target: {fileID: 3201427540602530238, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
       propertyPath: m_Name
@@ -973,7 +973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3201427540602530242, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
       propertyPath: m_Name
-      value: Mesh
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

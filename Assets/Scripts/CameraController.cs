@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     public float rotationSpeed = 300f;
     public float decayFactor = 0.9f;
     public LayerMask obstacleLayers;
-    public float characterFollowRotationSpeed = 20f;
+    public float characterFollowRotationSpeed = 10f;
     public float offsetFactor = 100f;
 
     private float x = 0f;
