@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public float speed = 300.0f;
-    public float turnSpeed = 300.0f;
-    public float rotationSpeed = 10.0f;
+    public float speed = 5.0f;
+    public float turnSpeed = 3.0f;
+    public float rotationSpeed = 3.0f;
     public float gravity = -20.0f;
     public float jumpHeight = 2.0f;
     public Transform groundCheck;
