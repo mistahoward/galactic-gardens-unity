@@ -236,7 +236,7 @@ MonoBehaviour:
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 0
-  characterFollowRotationSpeed: 20
+  characterFollowRotationSpeed: 10
   offsetFactor: 100
 --- !u!4 &746896105 stripped
 Transform:
@@ -252,7 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 763230332}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Impact Rocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -678,7 +678,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1484814895}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crashed Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,9 +712,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1484814895}
     m_Modifications:
+    - target: {fileID: 1211842581639888, guid: bbd1860d44f6c7546aad605f3666475f, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1632659334546840, guid: bbd1860d44f6c7546aad605f3666475f, type: 3}
       propertyPath: m_Name
       value: FireArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 1632659334546840, guid: bbd1860d44f6c7546aad605f3666475f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4256412018972890, guid: bbd1860d44f6c7546aad605f3666475f, type: 3}
       propertyPath: m_RootOrder
@@ -788,7 +796,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1821021984}
   - component: {fileID: 1821021983}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Fire Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -919,6 +927,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3183435419616461530, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
+      propertyPath: m_Height
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183435419616461530, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
+      propertyPath: m_Center.y
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3201427540602500510, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -974,6 +990,14 @@ PrefabInstance:
     - target: {fileID: 3201427540602530242, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657317693397914089, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657317693397914089, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.054
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

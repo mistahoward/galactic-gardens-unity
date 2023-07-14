@@ -57,7 +57,7 @@ public class CameraController : MonoBehaviour
 
             y = Mathf.Clamp(y, 0f, 50f);
 
-            Quaternion rotation = Quaternion.Euler(y, x, 0);
+            Quaternion rotation = Quaternion.Euler(y - 18.5f, x, 0);
             Vector3 direction = rotation * offset;
             Vector3 desiredPosition = target.position + direction;
 
@@ -65,6 +65,8 @@ public class CameraController : MonoBehaviour
             {
                 desiredPosition = hit.point;
             }
+
+            y = Mathf.Clamp(y, -50f, 50f); // This prevents the camera from flipping over
 
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * damping);
             transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * damping);
