@@ -270,6 +270,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3364325394453186254, guid: 3940a4795f91c674fb48d6d4e299297a, type: 3}
+      propertyPath: TimeOfDay
+      value: 359
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364325394453186254, guid: 3940a4795f91c674fb48d6d4e299297a, type: 3}
       propertyPath: daySkybox
       value: 
       objectReference: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
