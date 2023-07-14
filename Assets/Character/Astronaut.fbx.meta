@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 02dd6406ed1ebc248b2fafd0485e0de9
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       1: 100000
@@ -231,7 +231,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
-    motionNodeName: 
+    motionNodeName: Armature
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -1078,6 +1078,89 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Side_Step
+      takeName: Armature|CharacterAnimation
+      internalID: 2749534189683022070
+      firstFrame: 0
+      lastFrame: 705
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/Body_Upper
+        weight: 1
+      - path: Armature/Root/Body_Upper/Arm_1_Left
+        weight: 1
+      - path: Armature/Root/Body_Upper/Arm_1_Left/Arm_2_Left
+        weight: 1
+      - path: Armature/Root/Body_Upper/Arm_1_Left/Arm_2_Left/Arm_2_Left_end
+        weight: 1
+      - path: Armature/Root/Body_Upper/Arm_1_Right
+        weight: 1
+      - path: Armature/Root/Body_Upper/Arm_1_Right/Arm_2_Right
+        weight: 1
+      - path: Armature/Root/Body_Upper/Arm_1_Right/Arm_2_Right/Arm_2_Right_end
+        weight: 1
+      - path: Armature/Root/Body_Upper/Head
+        weight: 1
+      - path: Armature/Root/Body_Upper/Head/Head_end
+        weight: 1
+      - path: Armature/Root/Body_Upper/IK_Arm_Left
+        weight: 1
+      - path: Armature/Root/Body_Upper/IK_Arm_Left/IK_Arm_Left_end
+        weight: 1
+      - path: Armature/Root/Body_Upper/IK_Arm_Right
+        weight: 1
+      - path: Armature/Root/Body_Upper/IK_Arm_Right/IK_Arm_Right_end
+        weight: 1
+      - path: Armature/Root/Foot_1_Left
+        weight: 1
+      - path: Armature/Root/Foot_1_Left/Foot_2_Left
+        weight: 1
+      - path: Armature/Root/Foot_1_Left/Foot_2_Left/Foot_2_Left_end
+        weight: 1
+      - path: Armature/Root/Foot_1_Right
+        weight: 1
+      - path: Armature/Root/Foot_1_Right/Foot_2_Right
+        weight: 1
+      - path: Armature/Root/Foot_1_Right/Foot_2_Right/Foot_2_Right_end
+        weight: 1
+      - path: Armature/Root/IK_Foot_Left
+        weight: 1
+      - path: Armature/Root/IK_Foot_Left/IK_Foot_Left_end
+        weight: 1
+      - path: Armature/Root/IK_Foot_Right
+        weight: 1
+      - path: Armature/Root/IK_Foot_Right/IK_Foot_Right_end
+        weight: 1
+      - path: Player
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -1086,6 +1169,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
@@ -1113,6 +1197,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 0
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -1145,6 +1230,8 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
