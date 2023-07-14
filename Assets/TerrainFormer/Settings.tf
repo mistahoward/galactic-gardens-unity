@@ -337,9 +337,9 @@
     "smoothingIterations": 1,
     "mouldToolRaycastOffset": 0.0,
     "mouldToolRaycastTopDown": false,
-    "mouldToolBoxFilterSize": 7,
+    "mouldToolBoxFilterSize": 3,
     "mouldAllIterations": 3,
     "targetOpacity": 1.0,
-    "selectedTextureIndex": -1,
+    "selectedTextureIndex": 0,
     "mainDirectory": "Assets/TerrainFormer/"
 }
