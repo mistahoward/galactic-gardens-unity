@@ -18,10 +18,10 @@
             "settings": {
                 "useFalloffForCustomBrushes": true,
                 "invertFalloff": false,
-                "selectedBrushTab": "Perlin Noise",
-                "selectedBrushId": "_DefaultPerlinNoiseBrushName",
-                "brushSize": 341.0,
-                "brushSpeed": 14.0,
+                "selectedBrushTab": "Falloff",
+                "selectedBrushId": "_DefaultFalloffBrushName",
+                "brushSize": 2.0,
+                "brushSpeed": 10.0,
                 "brushRoundness": 1.0,
                 "brushAngle": -18.0,
                 "brushFalloff": {
