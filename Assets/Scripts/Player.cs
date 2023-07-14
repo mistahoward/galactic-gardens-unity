@@ -52,12 +52,10 @@ namespace Player
             if (x != 0 || z != 0) // if there's any movement input
             {
                 anim.SetInteger("AnimationPar", 1);
-                Debug.Log("Walking animation should play");
             }
             else
             {
                 anim.SetInteger("AnimationPar", 0);
-                Debug.Log("Idle animation should play");
             }
 
 
