@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileGeneration : MonoBehaviour
@@ -14,6 +15,7 @@ public class TileGeneration : MonoBehaviour
     private MeshCollider meshCollider;
     [SerializeField]
     private float mapScale;
+    private float[,] noiseMap;
     void Start()
     {
         GenerateTile();
@@ -21,14 +23,15 @@ public class TileGeneration : MonoBehaviour
     void GenerateTile()
     {
         // calculate tile depth and width based on the mesh vertices
-        Vector3[] meshVertices = this.meshFilter.mesh.vertices;
+        Vector3[] meshVertices = meshFilter.mesh.vertices;
         int tileDepth = (int)Mathf.Sqrt(meshVertices.Length);
         int tileWidth = tileDepth;
         // calculate the offsets based on the tile position
-        float[,] heightMap = this.noiseMapGeneration.GenerateNoiseMap(tileDepth, tileWidth, this.mapScale);
+        float[,] heightMap = noiseMapGeneration.GenerateNoiseMap(tileDepth, tileWidth, mapScale);
+        noiseMap = heightMap;
         // generate a heightMap using noise
         Texture2D tileTexture = BuildTexture(heightMap);
-        this.tileRenderer.material.mainTexture = tileTexture;
+        tileRenderer.material.mainTexture = tileTexture;
     }
     private Texture2D BuildTexture(float[,] heightMap)
     {
@@ -47,8 +50,10 @@ public class TileGeneration : MonoBehaviour
             }
         }
         // create a new texture and set its pixel colors
-        Texture2D tileTexture = new Texture2D(tileWidth, tileDepth);
-        tileTexture.wrapMode = TextureWrapMode.Clamp;
+        Texture2D tileTexture = new(tileWidth, tileDepth)
+        {
+            wrapMode = TextureWrapMode.Clamp
+        };
         tileTexture.SetPixels(colorMap);
         tileTexture.Apply();
         return tileTexture;
