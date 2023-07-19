@@ -14,12 +14,12 @@ public class PlayerSpawner : MonoBehaviour
     private void Start()
     {
         Vector3 spawnPosition = GetRandomPositionWithinTileSystem();
-        Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-        SetCameraToPlayer();
+        GameObject playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        SetCameraToPlayer(playerInstance);
     }
-    private void SetCameraToPlayer()
+    private void SetCameraToPlayer(GameObject playerInstance)
     {
-        _cameraController.SetTarget(playerPrefab.transform);
+        _cameraController.SetTarget(playerInstance.transform);
     }
 
     public void InitializePlayerSpawner(GameObject prefab, int workingMapWidth, int workingMapDepth, float workingBottomMapY, float workingTopMapY, System.Func<Vector3, float> terrainHeightFunc, CameraController cameraController)
