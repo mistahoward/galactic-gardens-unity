@@ -79,6 +79,7 @@ public class PlanetGeneration : MonoBehaviour
         tileGeneration._meshCollider = meshCollider;
         tileGeneration.PlanetGeneration = this;
         tileGeneration.noiseMapGeneration = noiseMapGeneration;
+        tileGeneration.tag = "Ground";
 
         _tilePrefab = initialTile;
 
