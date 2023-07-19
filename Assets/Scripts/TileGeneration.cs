@@ -5,16 +5,11 @@ using UnityEngine;
 
 public class TileGeneration : MonoBehaviour
 {
-    [SerializeField]
-    PlanetGeneration PlanetGeneration;
-    [SerializeField]
-    NoiseMapGeneration noiseMapGeneration;
-    [SerializeField]
-    private MeshRenderer _tileRenderer;
-    [SerializeField]
-    private MeshFilter _meshFilter;
-    [SerializeField]
-    private MeshCollider _meshCollider;
+    public PlanetGeneration PlanetGeneration;
+    public NoiseMapGeneration noiseMapGeneration;
+    public MeshRenderer _tileRenderer;
+    public MeshFilter _meshFilter;
+    public MeshCollider _meshCollider;
     private float _mapScale;
     private float _heightMultiplier;
     private AnimationCurve _heightCurve;
@@ -41,10 +36,22 @@ public class TileGeneration : MonoBehaviour
         // generate a heightMap using noise
         float[,] heightMap = noiseMapGeneration.GenerateNoiseMap(tileDepth, tileWidth, _mapScale, offsetX, offsetZ, _waves);
         // build a Texture2D from the height map
-        Texture2D tileTexture = BuildTexture(heightMap);
-        _tileRenderer.material.mainTexture = tileTexture;
+        Texture2D splatMap = BuildSplatMap(heightMap);
+        Shader splatShader = Shader.Find("Custom/BlendShader");
+        Material terrainMaterial = new(splatShader);
+        terrainMaterial.SetTexture("_Splat", splatMap);
+        for (int i = 0; i < _terrainTypes.Length; i++)
+        {
+            terrainMaterial.SetTexture("_Texture" + (i + 1), _terrainTypes[i].texture);
+        }
+        terrainMaterial.SetTexture("_Splat", splatMap);
+
+        // assign the material to the mesh renderer
+        _tileRenderer.material = terrainMaterial;
+
         // update the tile mesh vertices according to the height map
         UpdateMeshVertices(heightMap);
+
     }
     private void UpdateMeshVertices(float[,] heightMap)
     {
@@ -71,24 +78,27 @@ public class TileGeneration : MonoBehaviour
         // update the mesh collider
         _meshCollider.sharedMesh = _meshFilter.mesh;
     }
-    private TerrainType ChooseTerrainType(float height)
+    private (TerrainType, int) ChooseTerrainType(float height)
     {
-        // for each terrain type, check if the height is lower than the one for the terrain type
-        foreach (TerrainType terrainType in _terrainTypes)
+        for (int i = 0; i < _terrainTypes.Length; i++)
         {
-            // return the first terrain type whose height is higher than the generated one
-            if (height < terrainType.height)
+            if (height < _terrainTypes[i].height)
             {
-                return terrainType;
+                return (_terrainTypes[i], i);
             }
         }
-        return _terrainTypes[^1];
+        return (_terrainTypes[^1], _terrainTypes.Length - 1);
     }
-    private Texture2D BuildTexture(float[,] heightMap)
+
+    private Texture2D BuildSplatMap(float[,] heightMap)
     {
         int tileDepth = heightMap.GetLength(0);
         int tileWidth = heightMap.GetLength(1);
-        Color[] colorMap = new Color[tileDepth * tileWidth];
+
+        // Each pixel in the splat map contains a color where each channel (red, green, blue, alpha) 
+        // represents the proportion of a corresponding texture that should be used.
+        Color[] splatMapColors = new Color[tileDepth * tileWidth];
+
         for (int zIndex = 0; zIndex < tileDepth; zIndex++)
         {
             for (int xIndex = 0; xIndex < tileWidth; xIndex++)
@@ -96,19 +106,25 @@ public class TileGeneration : MonoBehaviour
                 // transform the 2D map index is an Array index
                 int colorIndex = zIndex * tileWidth + xIndex;
                 float height = heightMap[zIndex, xIndex];
+
                 // choose a terrain type according to the height value
-                TerrainType terrainType = ChooseTerrainType(height);
+                (TerrainType terrainType, int terrainIndex) = ChooseTerrainType(height);
+
                 // assign the color according to the terrain type
-                colorMap[colorIndex] = terrainType.color;
+                Color color = new Color(0, 0, 0);
+                color[terrainIndex] = 1;
+                splatMapColors[colorIndex] = color;
             }
         }
+
         // create a new texture and set its pixel colors
-        Texture2D tileTexture = new(tileWidth, tileDepth)
+        Texture2D splatMap = new Texture2D(tileWidth, tileDepth)
         {
             wrapMode = TextureWrapMode.Clamp
         };
-        tileTexture.SetPixels(colorMap);
-        tileTexture.Apply();
-        return tileTexture;
+        splatMap.SetPixels(splatMapColors);
+        splatMap.Apply();
+        return splatMap;
     }
+
 }

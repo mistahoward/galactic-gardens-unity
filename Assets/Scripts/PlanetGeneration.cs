@@ -8,14 +8,14 @@ public class TerrainType
 {
     public string name;
     public float height;
-    public Color color;
+    public Texture2D texture;
 }
 
 public class PlanetGeneration : MonoBehaviour
 {
+    NoiseMapGeneration noiseMapGeneration;
     [SerializeField]
     private int _mapWidthInTiles, _mapDepthInTiles;
-    [SerializeField]
     private GameObject _tilePrefab;
     [SerializeField]
     private TerrainType[] _terrainTypes;
@@ -61,7 +61,24 @@ public class PlanetGeneration : MonoBehaviour
                 amplitude = Random.Range(0.1f, 1.0f)  // Adjust range as needed
             };
         }
-        GenerateMap();
+
+        GameObject initialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+
+        MeshRenderer meshRenderer = initialTile.GetComponent<MeshRenderer>();
+        MeshFilter meshFilter = initialTile.GetComponent<MeshFilter>();
+        MeshCollider meshCollider = initialTile.GetComponent<MeshCollider>();
+        noiseMapGeneration = GetComponent<NoiseMapGeneration>();
+
+        TileGeneration tileGeneration = initialTile.AddComponent<TileGeneration>();
+        tileGeneration._tileRenderer = meshRenderer;
+        tileGeneration._meshFilter = meshFilter;
+        tileGeneration._meshCollider = meshCollider;
+        tileGeneration.PlanetGeneration = this;
+        tileGeneration.noiseMapGeneration = noiseMapGeneration;
+
+        _tilePrefab = initialTile;
+
+        GenerateMap(); 
     }
     public void GenerateMap()
     {
