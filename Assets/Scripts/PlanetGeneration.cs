@@ -82,7 +82,8 @@ public class PlanetGeneration : MonoBehaviour
         tileGeneration.PlanetGeneration = this;
         tileGeneration.noiseMapGeneration = noiseMapGeneration;
         tileGeneration.tag = "Ground";
-
+        LayerMask groundLayer = LayerMask.NameToLayer("Ground");
+        initialTile.layer = groundLayer;
         _tilePrefab = initialTile;
 
         GenerateMap();
