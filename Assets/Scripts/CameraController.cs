@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform target;
-    public Vector3 offset = new Vector3(0f, 1.5f, -5f);
+    public Vector3 offset = new(0f, 1.5f, -5f);
     public float damping = 2f;
     public float rotationSpeed = 300f;
     public float decayFactor = 0.9f;
@@ -21,6 +21,13 @@ public class CameraController : MonoBehaviour
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
+
+        SetTarget(null); // Set initial target as null
+    }
+
+    public void SetTarget(Transform targetTransform)
+    {
+        target = targetTransform;
     }
 
     void LateUpdate()

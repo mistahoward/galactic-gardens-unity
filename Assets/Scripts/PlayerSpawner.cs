@@ -8,14 +8,21 @@ public class PlayerSpawner : MonoBehaviour
     private float bottomMapY;
     private float topMapY;
     private System.Func<Vector3, float> getTerrainHeightAtPosition;
+    public Vector3 PlayerSpawnPoint;
+    private CameraController _cameraController;
 
     private void Start()
     {
         Vector3 spawnPosition = GetRandomPositionWithinTileSystem();
         Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        SetCameraToPlayer();
+    }
+    private void SetCameraToPlayer()
+    {
+        _cameraController.SetTarget(playerPrefab.transform);
     }
 
-    public void InitializePlayerSpawner(GameObject prefab, int workingMapWidth, int workingMapDepth, float workingBottomMapY, float workingTopMapY, System.Func<Vector3, float> terrainHeightFunc)
+    public void InitializePlayerSpawner(GameObject prefab, int workingMapWidth, int workingMapDepth, float workingBottomMapY, float workingTopMapY, System.Func<Vector3, float> terrainHeightFunc, CameraController cameraController)
     {
         playerPrefab = prefab;
         mapWidth = workingMapWidth;
@@ -23,6 +30,7 @@ public class PlayerSpawner : MonoBehaviour
         bottomMapY = workingBottomMapY;
         topMapY = workingTopMapY;
         getTerrainHeightAtPosition = terrainHeightFunc;
+        _cameraController = cameraController;
     }
 
     private Vector3 GetRandomPositionWithinTileSystem()
@@ -31,6 +39,8 @@ public class PlayerSpawner : MonoBehaviour
         float randomZ = Random.Range(0f, mapDepth * topMapY);
         Vector3 incompletCoordinate = new(randomX, 0f, randomZ);
         float terrainY = getTerrainHeightAtPosition(incompletCoordinate);
-        return new Vector3(randomX, terrainY, randomZ);
+        var workingPlayerSpawnPoint = new Vector3(randomX, terrainY, randomZ);
+        PlayerSpawnPoint = workingPlayerSpawnPoint;
+        return workingPlayerSpawnPoint;
     }
 }

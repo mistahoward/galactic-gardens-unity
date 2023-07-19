@@ -15,6 +15,8 @@ public class PlanetGeneration : MonoBehaviour
 {
     [SerializeField]
     GameObject playerPrefab;
+    [SerializeField]
+    CameraController cameraController;
     NoiseMapGeneration noiseMapGeneration;
     [SerializeField]
     private int _mapWidthInTiles, _mapDepthInTiles;
@@ -84,9 +86,21 @@ public class PlanetGeneration : MonoBehaviour
         _tilePrefab = initialTile;
 
         GenerateMap();
-
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null)
+        {
+            cameraController = mainCamera.GetComponent<CameraController>();
+            cameraController.SetTarget(playerPrefab.transform);
+        }
+        else
+        {
+            // spawn camera 
+        }
         PlayerSpawner playerSpawner = gameObject.AddComponent<PlayerSpawner>();
-        playerSpawner.InitializePlayerSpawner(playerPrefab, _mapWidthInTiles, _mapDepthInTiles, bottomY, topY, GetTerrainHeightAtPosition);
+        playerSpawner.InitializePlayerSpawner(playerPrefab, _mapWidthInTiles, _mapDepthInTiles, bottomY, topY, GetTerrainHeightAtPosition, cameraController);
+        //CameraSpawner cameraSpawner = gameObject.AddComponent<CameraSpawner>();
+        //cameraSpawner.InitializeCameraSpawner(cameraController);
+
     }
     public void GenerateMap()
     {
