@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8a567e2eee09244880fc91269f2dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 3201427540602530238, guid: 4508a98ec8003c342b81b821d90d89db, type: 3}
   _mapWidthInTiles: 10
   _mapDepthInTiles: 10
   _terrainTypes:

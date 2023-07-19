@@ -13,6 +13,8 @@ public class TerrainType
 
 public class PlanetGeneration : MonoBehaviour
 {
+    [SerializeField]
+    GameObject playerPrefab;
     NoiseMapGeneration noiseMapGeneration;
     [SerializeField]
     private int _mapWidthInTiles, _mapDepthInTiles;
@@ -26,6 +28,8 @@ public class PlanetGeneration : MonoBehaviour
     [SerializeField]
     private AnimationCurve _heightCurve;
     private Wave[] _waves;
+    private float bottomY;
+    private float topY;
 
     public float MapScale
     {
@@ -78,7 +82,10 @@ public class PlanetGeneration : MonoBehaviour
 
         _tilePrefab = initialTile;
 
-        GenerateMap(); 
+        GenerateMap();
+
+        PlayerSpawner playerSpawner = gameObject.AddComponent<PlayerSpawner>();
+        playerSpawner.InitializePlayerSpawner(playerPrefab, _mapWidthInTiles, _mapDepthInTiles, bottomY, topY, GetTerrainHeightAtPosition);
     }
     public void GenerateMap()
     {
@@ -91,11 +98,29 @@ public class PlanetGeneration : MonoBehaviour
                             .Select(zTileIndex => new Vector3(gameObject.transform.position.x + xTileIndex * tileWidth,
                                                               gameObject.transform.position.y,
                                                               gameObject.transform.position.z + zTileIndex * tileDepth)));
-
         foreach (var tilePosition in tilePositions)
         {
+            if (bottomY > tilePosition.y)
+            {
+                bottomY = tilePosition.y;
+            }
+            if (topY < tilePosition.y)
+            {
+                topY = tilePosition.y;
+            }
             Instantiate(_tilePrefab, tilePosition, Quaternion.identity);
         }
+    }
+    private float GetTerrainHeightAtPosition(Vector3 position)
+    {
+        // Cast a ray downwards from the given position to determine the terrain height
+        if (Physics.Raycast(position + Vector3.up * 100f, Vector3.down, out RaycastHit hit, Mathf.Infinity))
+        {
+            return hit.point.y;
+        }
+
+        // Default to zero if no terrain is hit
+        return 0f;
     }
 
 }
